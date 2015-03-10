@@ -8,16 +8,32 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
 
+    var lists: [Checklist]
+    
+    required init(coder aDecoder: NSCoder) {
+        
+        lists = [Checklist]()
+        
+        super.init(coder: aDecoder)
+        
+        var list = Checklist(name: "Birthdays")
+        lists.append(list)
+        
+        list = Checklist(name: "Groceries")
+        lists.append(list)
+        
+        list = Checklist(name: "Cool Apps")
+        lists.append(list)
+        
+        list = Checklist(name: "To Do")
+        lists.append(list)
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +43,7 @@ class AllListsViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 3
+        return lists.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -40,19 +56,39 @@ class AllListsViewController: UITableViewController {
             
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
         }
-    
-        cell.textLabel?.text = "List\(indexPath.row)"
+        
+        let checklist = lists[indexPath.row]
+        
+        cell.textLabel?.text = checklist.name
+        cell.accessoryType = .DetailDisclosureButton
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let checklist = lists[indexPath.row]
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("ShowChecklist", sender: nil)
+        performSegueWithIdentifier("ShowChecklist", sender: checklist)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
+        // This will make it so the title of the checklist is the name of the checklist
+        if segue.identifier == "ShowChecklist" {
+        
+            let controller = segue.destinationViewController as ChecklistTableViewController
+        
+            controller.checklist = sender as Checklist
+        } else if segue.identifier == "AddChecklist" {
+            
+            let navigationController = segue.destinationViewController as UINavigationController
+            let controller = navigationController.topViewController as ListDetailViewController
+            
+            controller.delegate = self
+            controller.checklistToEdit = nil
+        }
+    }
     
     
     

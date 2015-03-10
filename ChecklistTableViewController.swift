@@ -10,6 +10,7 @@ import UIKit
 
 class ChecklistTableViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
+    var checklist: Checklist!
     var items: [ChecklistItem]
     
     required init(coder aDecoder: NSCoder) {
@@ -44,14 +45,18 @@ class ChecklistTableViewController: UITableViewController, ItemDetailViewControl
         super.init(coder: aDecoder)
         loadChecklistItems()
         
-    
+        // Save folder and path information
+        /*
         println("Documents folder is \(documentsDirectory())")
         println("Data file path is \(dataFilePath())")
+        */
     }
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
+        tableView.rowHeight = 44
+        title = checklist.name
     }
 
     override func didReceiveMemoryWarning() {
@@ -220,6 +225,7 @@ class ChecklistTableViewController: UITableViewController, ItemDetailViewControl
 
     }
   
+    
     
     
     
