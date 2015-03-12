@@ -11,7 +11,6 @@ import UIKit
 protocol ListDetailViewControllerDelegate: class {
     
     func listDetailViewController(controller: ListDetailViewController)
-    func listDetailViewContollerDidCancel(controller: ListDetailViewController, didFinishAddingChecklist checklist: Checklist)
     func listDetailViewController(controller: ListDetailViewController,
                                                             didFinishAddingChecklist checklist: Checklist)
     func listDetailViewController(controller: ListDetailViewController,
@@ -19,7 +18,7 @@ protocol ListDetailViewControllerDelegate: class {
     
 }
 
-class ListDetailViewController: UITableViewController {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
