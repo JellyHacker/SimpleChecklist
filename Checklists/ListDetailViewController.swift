@@ -10,7 +10,7 @@ import UIKit
 
 protocol ListDetailViewControllerDelegate: class {
     
-    func listDetailViewController(controller: ListDetailViewController)
+    func listDetailViewControllerDidCancel(controller: ListDetailViewController)
     func listDetailViewController(controller: ListDetailViewController,
                                                             didFinishAddingChecklist checklist: Checklist)
     func listDetailViewController(controller: ListDetailViewController,
@@ -29,7 +29,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func cancel() {
         
-        delegate?.listDetailViewController(self)
+        delegate?.listDetailViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
@@ -64,8 +64,6 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.

@@ -99,7 +99,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
     
-    func listDetailViewContollerDidCancel(controller: ListDetailViewController, didFinishAddingChecklist checklist: Checklist) {
+    
+    /*
+        ListDetailViewControllerDelegate methods
+    */
+    func listDetailViewControllerDidCancel(controller: ListDetailViewController) {
         
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -112,16 +116,14 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         lists.append(checklist)
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-        
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     func listDetailViewController(controller: ListDetailViewController, didFinishEditingChecklist checklist: Checklist) {
         
         if let index = find(lists, checklist) {
             
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 
                 cell.textLabel?.text = checklist.name
@@ -130,19 +132,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

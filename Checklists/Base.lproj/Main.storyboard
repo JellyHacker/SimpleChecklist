@@ -104,6 +104,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="done" destination="qdg-ct-b6A" eventType="editingDidEndOnExit" id="RIn-XZ-hj9"/>
+                                                        <outlet property="delegate" destination="qdg-ct-b6A" id="LiE-XI-DU4"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -118,7 +119,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Checklist" id="McH-OQ-Lbd">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="xFO-T6-lKo"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="xFO-T6-lKo">
+                            <connections>
+                                <action selector="cancel" destination="qdg-ct-b6A" id="8Q9-VP-XeX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="done" id="lIA-DS-Hfu">
                             <connections>
                                 <action selector="done" destination="qdg-ct-b6A" id="8VG-ki-0DP"/>
@@ -126,6 +131,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneBarButton" destination="lIA-DS-Hfu" id="pCn-YW-F0b"/>
                         <outlet property="textField" destination="uC3-pi-3dp" id="Cxe-wg-5xe"/>
                     </connections>
                 </tableViewController>
