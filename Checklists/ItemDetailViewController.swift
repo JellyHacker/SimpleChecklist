@@ -46,7 +46,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
         tableView.rowHeight = 44
         
         if let item = itemToEdit {

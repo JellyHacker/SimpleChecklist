@@ -99,6 +99,17 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
     
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        
+        //Inside this method you create the view controller object for the Add/Edit Checklist screen and show it (“present” it) on the screen.
+        let navigationController = storyboard!.instantiateViewControllerWithIdentifier("ListNavigationController") as UINavigationController
+        let controller = navigationController.topViewController as ListDetailViewController
+        let checklist = lists[indexPath.row]
+        
+        controller.delegate = self
+        controller.checklistToEdit = checklist
+        presentViewController(navigationController, animated: true, completion: nil)
+    }
     
     /*
         ListDetailViewControllerDelegate methods

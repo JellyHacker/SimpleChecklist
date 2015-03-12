@@ -142,7 +142,7 @@
         <!--Navigation Controller-->
         <scene sceneID="1NN-2D-GAF">
             <objects>
-                <navigationController id="Mjl-B2-VU2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ListNavigationController" id="Mjl-B2-VU2" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0mb-8n-XQG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
