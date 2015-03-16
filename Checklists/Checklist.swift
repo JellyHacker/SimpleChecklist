@@ -14,10 +14,13 @@ class Checklist: NSObject, NSCoding {
    
     var name: String = ""
     var items = [ChecklistItem]()
+    var iconName: String
     
     init(name: String) {
         
         self.name = name
+        // This declaration is necessary because iconName is not an optional variable
+        self.iconName = "No Icon"
         super.init()
     }
     
@@ -25,6 +28,7 @@ class Checklist: NSObject, NSCoding {
         
         name = aDecoder.decodeObjectForKey("Name") as String
         items = aDecoder.decodeObjectForKey("Items") as [ChecklistItem]
+        iconName = aDecoder.decodeObjectForKey("IconName") as String
         super.init()
     }
     
@@ -32,6 +36,7 @@ class Checklist: NSObject, NSCoding {
         
         aCoder.encodeObject(name, forKey: "Names")
         aCoder.encodeObject(items, forKey: "Items")
+        aCoder.encodeObject(iconName, forKey: "IconName")
     }
     
     func countUncheckedItems() -> Int {

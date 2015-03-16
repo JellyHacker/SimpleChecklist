@@ -18,14 +18,16 @@ protocol ListDetailViewControllerDelegate: class {
     
 }
 
-class ListDetailViewController: UITableViewController, UITextFieldDelegate {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate, IconPickerViewControllerDelegate {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var iconImageView: UIImageView!
     
     weak var delegate: ListDetailViewControllerDelegate?
     
     var checklistToEdit: Checklist?
+    var iconName = "Folder"
     
     @IBAction func cancel() {
         
@@ -38,12 +40,14 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
         if let checklist = checklistToEdit {
             
             checklist.name = textField.text
+            checklist.iconName = iconName
             delegate?.listDetailViewController(self, didFinishEditingChecklist: checklist)
         }
         // Checklist does not already exist --> Adding
         else {
             
             let checklist = Checklist(name: textField.text)
+            checklist.iconName = iconName
             delegate?.listDetailViewController(self, didFinishAddingChecklist: checklist)
         }
     }
@@ -57,7 +61,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Checklist"
             textField.text = checklist.name
             doneBarButton.enabled = true
+            iconName = checklist.iconName
         }
+        iconImageView.image = UIImage(named: iconName)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,7 +79,13 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
-        return nil
+        if indexPath.section == 1 {
+            
+            return indexPath
+        } else {
+            
+            return nil
+        }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -86,10 +98,24 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "PickIcon" {
+            
+            let controller = segue.destinationViewController as IconPickerViewController
+            controller.delegate = self
+        }
+    }
     
-    
-    
-    
+    // Delegate method
+    func iconPicker(picker: IconPickerViewController, didPickIcon iconName: String) {
+        
+        // This puts the name of the chosen icon into the iconName variable to remember it, and also updates the image view with the new image.
+        //You don’t call dismissViewController() here but popViewControllerAnimated() because the Icon Picker is on the navigation stack.
+        self.iconName = iconName
+        iconImageView.image = UIImage(named: iconName)
+        navigationController?.popViewControllerAnimated(true)
+    }
     
     
     
