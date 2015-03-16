@@ -16,6 +16,22 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         super.viewDidLoad()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self
+        
+        let index = dataModel.indexOfSelectedChecklist
+        
+        if index >= 0 && index < dataModel.lists.count {
+            
+            let checklist = dataModel.lists[index]
+            
+            performSegueWithIdentifier("ShowChecklist", sender: checklist)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -92,21 +108,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         controller.delegate = self
         controller.checklistToEdit = checklist
         presentViewController(navigationController, animated: true, completion: nil)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        
-        navigationController?.delegate = self
-        
-        let index = dataModel.indexOfSelectedChecklist
-            if index != -1 {
-                
-                let checklist = dataModel.lists[index]
-                
-                performSegueWithIdentifier("ShowChecklist", sender: checklist)
-            }
     }
     
     /*

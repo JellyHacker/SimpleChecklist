@@ -18,6 +18,7 @@ class DataModel {
         }
         set {
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "ChecklistIndex")
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
@@ -25,14 +26,31 @@ class DataModel {
         
         loadChecklists()
         registerDefaults()
+        handleFirstTime()
     }
     
     func registerDefaults() {
         
         // This creates a new Dictionary instance and adds the value -1 for the key “ChecklistIndex”.
-        let dictionary = ["ChecklistIndex": -1]
+        let dictionary = ["ChecklistIndex": -1, "FirstTime": true]
         
         NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
+    }
+    
+    // Here you check NSUserDefaults for the value of the “FirstTime” key. If the value for “FirstTime” is true, then this is the first time the app is being run. In that case, you create a new Checklist object and add it to the array.
+    func handleFirstTime() {
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let firstTime = userDefaults.boolForKey("FirstTime")
+        
+        if firstTime {
+            
+            let checklist = Checklist(name: "List")
+            
+            lists.append(checklist)
+            indexOfSelectedChecklist = 0
+            userDefaults.setBool(false, forKey: "FirstTime")
+        }
     }
     
     func documentsDirectory() -> String {
