@@ -6,10 +6,13 @@
 //  Copyright (c) 2015 Vicinity inc. All rights reserved.
 //
 
+
 import UIKit
+
 
 class Checklist: NSObject, NSCoding {
    
+//TODO: Get rid of the :String? once the save bug is fixed
     var name: String? = ""
     var items = [ChecklistItem]()
     
@@ -21,6 +24,7 @@ class Checklist: NSObject, NSCoding {
     
     required init(coder aDecoder: NSCoder) {
         
+//TODO: Get rid of the ? after "as" once the save bug is fixed
         name = aDecoder.decodeObjectForKey("Name") as? String
         items = aDecoder.decodeObjectForKey("Items") as [ChecklistItem]
         super.init()
