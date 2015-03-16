@@ -16,6 +16,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         lists = [Checklist]()
         super.init(coder: aDecoder)
+        //println(documentsDirectory())
         loadChecklists()
     }
     
