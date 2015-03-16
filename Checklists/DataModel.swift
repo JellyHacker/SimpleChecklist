@@ -53,6 +53,16 @@ class DataModel {
         }
     }
     
+    func sortChecklists() {
+        
+        lists.sort({ checklist1, checklist2 in return
+        checklist1.name.localizedStandardCompare(checklist2.name) == NSComparisonResult.OrderedAscending })
+    }
+    
+    
+    /*
+    Load/Save functions
+    */
     func documentsDirectory() -> String {
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as [String]
@@ -81,6 +91,8 @@ class DataModel {
     }
     
     func loadChecklists() {
+            
+            println(documentsDirectory())
         
         // First you put the results of [self dataFilePath] in a temporary constant named path. You use the pathname more than once in this method so having it available in a local instead of calling dataFilePath() several times over is a small optimization.
         let path = dataFilePath()
@@ -95,6 +107,7 @@ class DataModel {
                 
                 lists = unarchiver.decodeObjectForKey("Checklists") as [Checklist]
                 unarchiver.finishDecoding()
+                sortChecklists()
             }
             
         }
