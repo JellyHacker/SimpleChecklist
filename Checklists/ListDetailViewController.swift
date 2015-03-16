@@ -46,8 +46,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
         // Checklist does not already exist --> Adding
         else {
             
-            let checklist = Checklist(name: textField.text)
-            checklist.iconName = iconName
+            let checklist = Checklist(name: textField.text, iconName: iconName)
             delegate?.listDetailViewController(self, didFinishAddingChecklist: checklist)
         }
     }

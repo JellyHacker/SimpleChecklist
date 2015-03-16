@@ -16,11 +16,15 @@ class Checklist: NSObject, NSCoding {
     var items = [ChecklistItem]()
     var iconName: String
     
-    init(name: String) {
+    convenience init(name: String) {
+        
+        self.init(name: name, iconName: "No Icon")
+    }
+    
+    init(name: String, iconName: String) {
         
         self.name = name
-        // This declaration is necessary because iconName is not an optional variable
-        self.iconName = "No Icon"
+        self.iconName = iconName
         super.init()
     }
     

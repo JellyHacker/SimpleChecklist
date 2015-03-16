@@ -119,16 +119,24 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fk1-pA-OMn" id="cc2-FX-eK5">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SK0-dN-K3d">
-                                                    <rect key="frame" x="8" y="4" width="36" height="36"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SK0-dN-K3d">
+                                                    <rect key="frame" x="531" y="4" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="0mp-Hn-uOb"/>
+                                                        <constraint firstAttribute="width" constant="36" id="SgA-It-TpB"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBq-R5-ZAY">
-                                                    <rect key="frame" x="57" y="11" width="34" height="21"/>
+                                                    <rect key="frame" x="8" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="SK0-dN-K3d" firstAttribute="top" secondItem="cc2-FX-eK5" secondAttribute="top" constant="4" id="Duq-aC-Rak"/>
+                                                <constraint firstAttribute="trailing" secondItem="SK0-dN-K3d" secondAttribute="trailing" id="jyQ-D1-pIc"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="rx4-t5-hi0" kind="show" identifier="PickIcon" id="LLf-no-KdG"/>
