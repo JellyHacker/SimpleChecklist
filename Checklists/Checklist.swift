@@ -10,7 +10,7 @@ import UIKit
 
 class Checklist: NSObject, NSCoding {
    
-    var name = ""
+    var name: String? = ""
     var items = [ChecklistItem]()
     
     init(name: String) {
@@ -21,7 +21,7 @@ class Checklist: NSObject, NSCoding {
     
     required init(coder aDecoder: NSCoder) {
         
-        name = aDecoder.decodeObjectForKey("Name") as String
+        name = aDecoder.decodeObjectForKey("Name") as? String
         items = aDecoder.decodeObjectForKey("Items") as [ChecklistItem]
         super.init()
     }
