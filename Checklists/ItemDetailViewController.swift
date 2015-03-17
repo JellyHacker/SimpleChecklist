@@ -39,6 +39,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             item.text = textField.text
             item.shouldRemind = shouldRemindSwitch.on
             item.dueDate = dueDate
+            item.scheduleNotification()
             delegate?.itemDetailViewController(self, didFinishEditingItem: item)
         } else {
             let item = ChecklistItem()
@@ -46,9 +47,23 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             item.shouldRemind = shouldRemindSwitch.on
             item.dueDate = dueDate
             item.checked = false
+            item.scheduleNotification()
             delegate?.itemDetailViewController(self, didFinishAddingItem: item)
         }
         
+    }
+    
+    // Changes to notiification permission prompt to occur the first time the reminder button is toggled to on, rather than on startup
+    @IBAction func shouldRemindToggled(switchControl: UISwitch) {
+        
+        textField.resignFirstResponder()
+        
+        if switchControl.on {
+            
+            let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
+            
+            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        }
     }
     
     override func viewDidLoad() {
