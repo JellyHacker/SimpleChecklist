@@ -22,21 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         controller.dataModel = dataModel
         
-        // Ask user for permission to display local notifications
-        let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
-        
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-        
-        // Create and send a local notification 10 seconds after launch
-        let date = NSDate(timeIntervalSinceNow: 10)
-        let localNotification = UILocalNotification()
-        
-        localNotification.fireDate = date
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        localNotification.alertBody = "I am a local notification!"
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        
         return true
     }
 
@@ -69,5 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataModel.saveChecklists()
     }
     
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        println("didReceiveNotification \(notification)")
+    }
 }
 

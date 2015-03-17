@@ -77,6 +77,7 @@ class ChecklistTableViewController: UITableViewController, ItemDetailViewControl
         
         label.text = item.text
         
+        configureTextForCell(cell, withChecklistItem: item)
         configureCheckmarkForCell(cell, withChecklistItem: item)
         
         return cell
