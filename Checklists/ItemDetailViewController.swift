@@ -146,7 +146,12 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         if indexPath.section == 1 && indexPath.row == 1 {
         
-            showDatePicker()
+            if !datePickerVisible {
+            
+                showDatePicker()
+            } else {
+                hideDatePicker()
+            }
         }
     }
     
@@ -187,9 +192,44 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         datePickerVisible = true
         
+        let indexPathDateRow = NSIndexPath(forRow: 1, inSection: 1)
         let indexPathDatePicker = NSIndexPath(forRow: 2, inSection: 1)
         
+        if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+            
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+        tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+        tableView.endUpdates()
+        
+        if let pickerCell = tableView.cellForRowAtIndexPath(indexPathDatePicker) {
+            
+            let datePicker = pickerCell.viewWithTag(100) as UIDatePicker
+            
+            datePicker.setDate(dueDate, animated: false)
+        }
+    }
+    
+    //This does the opposite of showDatePicker(). It deletes the date picker cell from the table view and restores the color of the date label to medium gray.
+    func hideDatePicker() {
+        
+        if datePickerVisible {
+        
+            let indexPathDateRow = NSIndexPath(forRow: 1, inSection: 1)
+            let indexPathDatePicker = NSIndexPath(forRow: 2, inSection: 1)
+        
+            if let cell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+                cell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+            }
+        
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+            tableView.endUpdates()
+        }
     }
     
     // For the due date picker
@@ -197,6 +237,11 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         dueDate = datePicker.date
         updateDueDateLabel()
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        hideDatePicker()
     }
     
 }
