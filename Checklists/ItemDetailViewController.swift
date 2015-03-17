@@ -215,19 +215,19 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     
     //This does the opposite of showDatePicker(). It deletes the date picker cell from the table view and restores the color of the date label to medium gray.
     func hideDatePicker() {
-        
         if datePickerVisible {
+            datePickerVisible = false
         
             let indexPathDateRow = NSIndexPath(forRow: 1, inSection: 1)
             let indexPathDatePicker = NSIndexPath(forRow: 2, inSection: 1)
         
-            if let cell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
-                cell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+            if let cell = tableView.cellForRowAtIndexPath(indexPathDateRow) { cell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
             }
-        
             tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
-            tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+            tableView.reloadRowsAtIndexPaths([indexPathDateRow],
+                withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathDatePicker],
+                withRowAnimation: .Fade)
             tableView.endUpdates()
         }
     }
