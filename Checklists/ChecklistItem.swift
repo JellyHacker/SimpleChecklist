@@ -33,6 +33,17 @@ class ChecklistItem: NSObject, NSCoding {
         super.init()
     }
     
+    deinit {
+        
+        let existingNotification = notificationForThisItem()
+        
+        if let notification = existingNotification {
+            
+            //println("Removing existing notification \(notification)")
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
+        }
+    }
+    
     func toggleChecked() {
         checked = !checked
     }
@@ -47,6 +58,14 @@ class ChecklistItem: NSObject, NSCoding {
     
     func scheduleNotification() {
         
+        let existingNotification = notificationForThisItem()
+        
+        if let notification = existingNotification {
+            
+            //println("Found an existing notification: \(notification)")
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
+        }
+        
         /*
         This compares the due date on the item with the current date. You can always get the current time by making a new NSDate object with NSDate().
         The statement dueDate.compare(NSDate()) compares the two dates and returns one
@@ -59,7 +78,7 @@ class ChecklistItem: NSObject, NSCoding {
         if shouldRemind && dueDate.compare(NSDate()) !=
             NSComparisonResult.OrderedAscending {
         
-            println("We should schedule a notification!")
+            //println("We should schedule a notification!")
         }
         
         let localNotification = UILocalNotification()
@@ -70,6 +89,28 @@ class ChecklistItem: NSObject, NSCoding {
         localNotification.userInfo = ["ItemID" : itemId]
         
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        println("Scheduled notification \(localNotification) for itemID \(itemId)")
+        //println("Scheduled notification \(localNotification) for itemID \(itemId)")
+    }
+    
+    /*
+    This asks UIApplication for a list of all scheduled notifications. Then it loops through that list and looks at each notification one-by-one.
+    The notification should have an “ItemID” value inside the userInfo dictionary. If that value exists and equals the itemID property, then you’ve found a notification that belongs to this ChecklistItem.
+    If none of the local notifications match, or if there aren’t any to begin with, the method returns nil.
+    */
+    func notificationForThisItem() -> UILocalNotification? {
+        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications as [UILocalNotification]
+            
+        for notification in allNotifications {
+            if let number = notification.userInfo?["ItemID"] as? NSNumber {
+            
+                if number.integerValue == itemId {
+            
+                    return notification
+                }
+            }
+        }
+        return nil
     }
 }
+
+
